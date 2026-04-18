@@ -18,13 +18,13 @@ export default function GlassCard({
   const [active, setActive] = useState(false);
   const mouseX = useMotionValue(50);
   const mouseY = useMotionValue(50);
-  const smoothX = useSpring(mouseX, { stiffness: 160, damping: 20, mass: 0.4 });
-  const smoothY = useSpring(mouseY, { stiffness: 160, damping: 20, mass: 0.4 });
-  const rotateX = useTransform(smoothY, [0, 100], [7, -7]);
-  const rotateY = useTransform(smoothX, [0, 100], [-7, 7]);
+  const smoothX = useSpring(mouseX, { stiffness: 200, damping: 24, mass: 0.5 });
+  const smoothY = useSpring(mouseY, { stiffness: 200, damping: 24, mass: 0.5 });
+  const rotateX = useTransform(smoothY, [0, 100], [5, -5]);
+  const rotateY = useTransform(smoothX, [0, 100], [-5, 5]);
   const glowX = useTransform(smoothX, (value) => `${value}%`);
   const glowY = useTransform(smoothY, (value) => `${value}%`);
-  const spotlight = useMotionTemplate`radial-gradient(circle at ${glowX} ${glowY}, rgba(255,255,255,0.2), transparent 34%)`;
+  const spotlight = useMotionTemplate`radial-gradient(circle at ${glowX} ${glowY}, rgba(255,255,255,0.15), transparent 30%)`;
 
   function handlePointerMove(event) {
     if (reduceMotion || !hover) {
@@ -47,15 +47,15 @@ export default function GlassCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 18 }}
+      initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
       whileHover={
         hover && !reduceMotion
           ? {
-              y: -6,
-              scale: 1.01,
-              transition: { duration: 0.26, ease: [0.22, 1, 0.36, 1] },
+              y: -4,
+              scale: 1.005,
+              transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
             }
           : undefined
       }
@@ -77,12 +77,12 @@ export default function GlassCard({
       {hover && !reduceMotion ? (
         <>
           <motion.div
-            className={`pointer-events-none absolute inset-0 transition-opacity duration-300 ${
+            className={`pointer-events-none absolute inset-0 transition-opacity duration-200 ${
               active ? 'opacity-100' : 'opacity-0'
             }`}
             style={{ backgroundImage: spotlight }}
           />
-          <div className="shine-slide pointer-events-none absolute -left-[42%] top-[-20%] h-[150%] w-[34%] rotate-[16deg] bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-70" />
+          <div className="shine-slide pointer-events-none absolute -left-[42%] top-[-20%] h-[150%] w-[34%] rotate-[16deg] bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-50" />
         </>
       ) : null}
       {children}

@@ -92,23 +92,23 @@ export default function AnimatedBackground({ theme = 'clear' }) {
     theme === 'clouds' || theme === 'fog' || theme === 'night' || showSnow;
 
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div className="pointer-events-none absolute inset-0 overflow-hidden will-change-transform">
       <motion.div
         className={`absolute inset-0 bg-gradient-to-br ${palette.gradient}`}
-        animate={{ scale: [1, 1.03, 1] }}
-        transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
+        animate={{ scale: [1, 1.02, 1] }}
+        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
         className="weather-aura absolute -left-24 top-0 h-[420px] w-[420px] rounded-full blur-3xl"
         style={{ background: palette.accentSoft }}
-        animate={{ opacity: [0.28, 0.44, 0.28], scale: [0.96, 1.08, 0.96] }}
-        transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+        animate={{ opacity: [0.28, 0.4, 0.28], scale: [0.98, 1.04, 0.98] }}
+        transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
         className="weather-aura-delayed absolute -right-20 top-1/4 h-[360px] w-[360px] rounded-full blur-3xl"
         style={{ background: palette.border }}
-        animate={{ opacity: [0.24, 0.38, 0.24], scale: [1, 1.06, 1] }}
-        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+        animate={{ opacity: [0.24, 0.34, 0.24], scale: [1, 1.03, 1] }}
+        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
       />
       <div
         className="ambient-beam absolute inset-y-[-10%] left-[12%] w-[34%] rotate-[10deg] blur-3xl"

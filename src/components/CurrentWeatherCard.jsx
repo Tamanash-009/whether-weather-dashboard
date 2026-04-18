@@ -88,8 +88,8 @@ export default function CurrentWeatherCard({
 
       <motion.div
         className="absolute -right-6 top-10 opacity-[0.18] sm:right-0"
-        animate={{ y: [0, -10, 0], rotate: [0, 3, -2, 0], scale: [1, 1.03, 1] }}
-        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+        animate={{ y: [0, -6, 0], scale: [1, 1.02, 1] }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
       >
         <WeatherIcon
           icon={weather.current.icon}
