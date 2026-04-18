@@ -145,60 +145,92 @@ export function formatNumericTemperature(value) {
   return `${roundValue(value)}\u00B0`;
 }
 
-export function formatTime(value) {
+export function formatTime(value, timezone) {
   const parsed = parseDateParts(value);
   if (!parsed) {
     return '--';
   }
 
-  return new Intl.DateTimeFormat('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-    timeZone: 'UTC',
-  }).format(parsed);
+  try {
+    return new Intl.DateTimeFormat('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+      timeZone: timezone || 'UTC',
+    }).format(parsed);
+  } catch {
+    return new Intl.DateTimeFormat('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    }).format(parsed);
+  }
 }
 
-export function formatDateTime(value) {
+export function formatDateTime(value, timezone) {
   const parsed = parseDateParts(value);
   if (!parsed) {
     return '--';
   }
 
-  return new Intl.DateTimeFormat('en-US', {
-    weekday: 'long',
-    month: 'short',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-    timeZone: 'UTC',
-  }).format(parsed);
+  try {
+    return new Intl.DateTimeFormat('en-US', {
+      weekday: 'long',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+      timeZone: timezone || 'UTC',
+    }).format(parsed);
+  } catch {
+    return new Intl.DateTimeFormat('en-US', {
+      weekday: 'long',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    }).format(parsed);
+  }
 }
 
-export function formatShortDay(value) {
+export function formatShortDay(value, timezone) {
   const parsed = parseDateParts(value);
   if (!parsed) {
     return '--';
   }
 
-  return new Intl.DateTimeFormat('en-US', {
-    weekday: 'short',
-    timeZone: 'UTC',
-  }).format(parsed);
+  try {
+    return new Intl.DateTimeFormat('en-US', {
+      weekday: 'short',
+      timeZone: timezone || 'UTC',
+    }).format(parsed);
+  } catch {
+    return new Intl.DateTimeFormat('en-US', {
+      weekday: 'short',
+    }).format(parsed);
+  }
 }
 
-export function formatMonthDay(value) {
+export function formatMonthDay(value, timezone) {
   const parsed = parseDateParts(value);
   if (!parsed) {
     return '--';
   }
 
-  return new Intl.DateTimeFormat('en-US', {
-    month: 'short',
-    day: 'numeric',
-    timeZone: 'UTC',
-  }).format(parsed);
+  try {
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      timeZone: timezone || 'UTC',
+    }).format(parsed);
+  } catch {
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+    }).format(parsed);
+  }
 }
 
 export function formatVisibility(valueInMeters) {
@@ -257,8 +289,8 @@ export function transformWeatherData({ forecast, location, unit }) {
   );
   const theme = descriptor.theme;
   const hourlySlice = forecast.hourly.time.slice(currentIndex, currentIndex + 24);
-  const timezoneLabel =
-    forecast.timezone_abbreviation || forecast.timezone || 'Local time';
+  const timezone = forecast.timezone || 'UTC';
+  const timezoneAbbr = forecast.timezone_abbreviation || 'Local';
   const currentUv =
     forecast.hourly?.uv_index?.[currentIndex] ??
     forecast.daily?.uv_index_max?.[0] ??
@@ -303,7 +335,7 @@ export function transformWeatherData({ forecast, location, unit }) {
 
       return {
         time,
-        label: index === 0 ? 'Now' : formatTime(time),
+        label: index === 0 ? 'Now' : formatTime(time, timezone),
         temperature: roundValue(forecast.hourly.temperature_2m[absoluteIndex]),
         weatherCode: forecast.hourly.weather_code[absoluteIndex],
         icon: hourlyDescriptor.icon,
@@ -318,8 +350,8 @@ export function transformWeatherData({ forecast, location, unit }) {
 
       return {
         time,
-        day: index === 0 ? 'Today' : formatShortDay(time),
-        date: formatMonthDay(time),
+        day: index === 0 ? 'Today' : formatShortDay(time, timezone),
+        date: formatMonthDay(time, timezone),
         weatherCode: forecast.daily.weather_code[index],
         icon: dailyDescriptor.icon,
         condition: dailyDescriptor.label,
@@ -334,7 +366,8 @@ export function transformWeatherData({ forecast, location, unit }) {
     meta: {
       theme,
       source: 'live',
-      timezone: timezoneLabel,
+      timezone: timezone,
+      timezoneAbbr: timezoneAbbr,
       unit,
       updatedAt: currentTime,
       isUserLocation: Boolean(location.isUserLocation),

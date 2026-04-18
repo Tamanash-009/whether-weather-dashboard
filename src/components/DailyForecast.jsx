@@ -3,13 +3,10 @@ import WeatherIcon from './WeatherIcon';
 
 export default function DailyForecast({ daily }) {
   return (
-    <GlassCard className="rounded-[34px] p-6" delay={0.24}>
+    <GlassCard className="rounded-[34px] p-5 sm:p-6" delay={0.2}>
       <h2 className="section-heading">7-Day Forecast</h2>
-      <p className="section-subtitle">
-        A sharper weekly outlook with more hierarchy and less clutter.
-      </p>
 
-      <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
+      <div className="mt-5 grid gap-2 sm:grid-cols-2 xl:grid-cols-1">
         {daily.map((entry) => (
           <div
             key={entry.time}

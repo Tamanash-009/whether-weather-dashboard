@@ -9,38 +9,34 @@ export default function FavoritesPanel({
   onToggleFavorite,
 }) {
   return (
-    <GlassCard className="rounded-[34px] p-6" delay={0.28}>
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <h2 className="section-heading">Favorite Cities</h2>
-          <p className="section-subtitle">
-            Curate a personal weather deck for quick mood checks.
-          </p>
-        </div>
+    <GlassCard className="rounded-[34px] p-5 sm:p-6" delay={0.24}>
+      <div className="flex items-center justify-between gap-3">
+        <h2 className="section-heading">Favorites</h2>
 
         <button
           type="button"
           onClick={onToggleFavorite}
           disabled={!currentCity}
-          className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition ${
+          aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition ${
             isFavorite
               ? 'border border-rose-300/30 bg-rose-400/15 text-rose-100'
               : 'border border-white/10 bg-slate-950/20 text-white hover:bg-white/10'
           }`}
         >
-          {isFavorite ? <Heart size={16} className="fill-current" /> : <Plus size={16} />}
-          {isFavorite ? 'Remove' : 'Add'}
+          {isFavorite ? <Heart size={14} className="fill-current" /> : <Plus size={14} />}
+          {isFavorite ? 'Saved' : 'Save'}
         </button>
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-3">
+      <div className="mt-4 flex flex-wrap gap-2">
         {favorites.length ? (
           favorites.map((city) => (
             <button
               key={city}
               type="button"
               onClick={() => onSelect(city)}
-              className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
+              className={`rounded-full border px-3 py-1.5 text-sm font-medium transition ${
                 city.toLowerCase() === currentCity?.toLowerCase()
                   ? 'border-sky-300/30 bg-sky-300/14 text-sky-100'
                   : 'border-white/10 bg-slate-950/20 text-slate-200 hover:bg-white/10'
@@ -50,8 +46,8 @@ export default function FavoritesPanel({
             </button>
           ))
         ) : (
-          <p className="text-sm text-slate-300/80">
-            Save a city to build your own personal forecast deck.
+          <p className="text-sm text-slate-400">
+            No saved cities yet
           </p>
         )}
       </div>

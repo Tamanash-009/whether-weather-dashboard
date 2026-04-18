@@ -83,11 +83,7 @@ body {
   }
 
   .section-heading {
-    @apply font-display text-lg font-semibold tracking-tight text-white sm:text-xl;
-  }
-
-  .section-subtitle {
-    @apply mt-1 text-sm text-slate-300/80;
+    @apply text-lg font-semibold tracking-tight text-white;
   }
 
   .weather-scroll {

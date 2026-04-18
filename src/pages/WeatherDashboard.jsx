@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { CloudSun, Compass, Radar, Sparkles } from 'lucide-react';
+import { CloudSun, Compass, Sparkles } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import AnimatedBackground from '../components/AnimatedBackground';
 import CurrentWeatherCard from '../components/CurrentWeatherCard';
@@ -10,7 +10,6 @@ import HourlyForecast from '../components/HourlyForecast';
 import LoadingSkeleton from '../components/LoadingSkeleton';
 import SearchBar from '../components/SearchBar';
 import StatusBanner from '../components/StatusBanner';
-import TemperatureChart from '../components/TemperatureChart';
 import UnitToggle from '../components/UnitToggle';
 import WeatherDetailsPanel from '../components/WeatherDetailsPanel';
 import { useWeather } from '../hooks/useWeather';
@@ -77,53 +76,34 @@ export default function WeatherDashboard() {
 
       <main className="relative z-10 mx-auto max-w-[1200px] px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
         <motion.header
-          initial={{ opacity: 0, y: 18, filter: 'blur(8px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between"
         >
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-slate-100/90">
-              <Sparkles size={14} />
-              Premium weather system
-            </div>
-
-            <div className="mt-5 flex items-center gap-3">
+            <div className="flex items-center gap-3">
               <div
-                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10"
+                className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/10"
                 style={{ boxShadow: `0 0 0 1px ${palette.border}` }}
               >
-                <CloudSun size={22} />
+                <CloudSun size={20} />
               </div>
               <div>
-                <p className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+                <h1 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
                   Whether
-                </p>
-                <p className="mt-1 text-sm text-slate-300/80">
-                  A more cinematic, mobile-inspired weather dashboard with real-time atmosphere and polished detail.
+                </h1>
+                <p className="text-sm text-slate-400">
+                  {weather?.meta?.source === 'fallback' ? 'Demo mode' : 'Live weather'}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div className="rounded-[26px] border border-white/10 bg-white/6 px-4 py-3">
-              <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.28em] text-slate-300/65">
-                <Radar size={14} />
-                Data source
-              </div>
-              <p className="mt-2 text-sm font-semibold text-white">
-                {weather?.meta?.source === 'fallback' ? 'Smart demo forecast' : 'Live forecast feed'}
-              </p>
-            </div>
-            <div className="rounded-[26px] border border-white/10 bg-white/6 px-4 py-3">
-              <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.28em] text-slate-300/65">
-                <Compass size={14} />
-                Units
-              </div>
-              <div className="mt-3">
-                <UnitToggle unit={unit} onChange={setUnit} />
-              </div>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 text-sm text-slate-400">
+              <Compass size={16} />
+              <UnitToggle unit={unit} onChange={setUnit} />
             </div>
           </div>
         </motion.header>
@@ -179,17 +159,16 @@ export default function WeatherDashboard() {
 
               <motion.div
                 variants={revealRow}
-                className="grid gap-6 xl:grid-cols-[1.04fr_0.96fr]"
+                className="grid gap-6 xl:grid-cols-[1fr_1fr]"
               >
-                <TemperatureChart hourly={weather.hourly} palette={palette} />
                 <DailyForecast daily={weather.daily} />
+                <HourlyForecast hourly={weather.hourly} />
               </motion.div>
 
               <motion.div
                 variants={revealRow}
                 className="grid gap-6 xl:grid-cols-[1.18fr_0.82fr]"
               >
-                <HourlyForecast hourly={weather.hourly} />
                 <FavoritesPanel
                   favorites={favorites}
                   currentCity={weather.location.city}

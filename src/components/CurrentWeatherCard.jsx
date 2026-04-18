@@ -118,7 +118,7 @@ export default function CurrentWeatherCard({
               {weather.location.region || weather.location.country || 'Live conditions'}
             </p>
             <p className="mt-3 text-sm text-slate-300/78">
-              {formatDateTime(weather.current.time)} / {weather.meta.timezone}
+              {formatDateTime(weather.current.time, weather.meta.timezone)} / {weather.meta.timezoneAbbr}
             </p>
           </div>
 

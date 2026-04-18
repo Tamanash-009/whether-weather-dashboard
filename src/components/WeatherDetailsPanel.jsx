@@ -16,7 +16,7 @@ import {
   formatUvIndex,
   formatVisibility,
   formatWindSpeed,
-  formatTime,
+  formatTime as formatTimeUtil,
 } from '../utils/weather';
 
 function DetailTile({ icon: Icon, label, value, tone }) {
@@ -77,13 +77,10 @@ export default function WeatherDetailsPanel({ weather, unit, palette }) {
   ];
 
   return (
-    <GlassCard className="h-full rounded-[36px] p-5 sm:p-6" delay={0.12}>
-      <h2 className="section-heading">Conditions Panel</h2>
-      <p className="section-subtitle">
-        Compact atmospheric detail with a more device-like presentation.
-      </p>
+    <GlassCard className="h-full rounded-[36px] p-5 sm:p-6" delay={0.1}>
+      <h2 className="section-heading">Details</h2>
 
-      <div className="mt-6 rounded-[28px] border border-white/10 bg-slate-950/22 p-4 sm:p-5">
+      <div className="mt-5 rounded-[28px] border border-white/10 bg-slate-950/22 p-4 sm:p-5">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.32em] text-slate-300/65">
             <Sunrise size={14} />
@@ -102,10 +99,10 @@ export default function WeatherDetailsPanel({ weather, unit, palette }) {
           />
           <div className="absolute left-0 bottom-0 flex items-center gap-2 text-sm text-slate-200">
             <Sunrise size={16} className="text-slate-300/75" />
-            {formatTime(weather.astro.sunrise)}
+            {formatTimeUtil(weather.astro.sunrise, weather.meta.timezone)}
           </div>
           <div className="absolute right-0 bottom-0 flex items-center gap-2 text-sm text-slate-200">
-            {formatTime(weather.astro.sunset)}
+            {formatTimeUtil(weather.astro.sunset, weather.meta.timezone)}
             <Sunset size={16} className="text-slate-300/75" />
           </div>
         </div>

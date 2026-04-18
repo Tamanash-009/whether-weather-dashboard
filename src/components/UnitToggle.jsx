@@ -1,9 +1,13 @@
 export default function UnitToggle({ unit, onChange }) {
   return (
-    <div className="glass-panel inline-flex rounded-full p-1 shadow-glow">
+    <div
+      role="radiogroup"
+      aria-label="Temperature unit"
+      className="inline-flex rounded-full p-1 shadow-glow"
+    >
       {[
-        { label: 'C', value: 'celsius' },
-        { label: 'F', value: 'fahrenheit' },
+        { label: '\u00B0C', value: 'celsius' },
+        { label: '\u00B0F', value: 'fahrenheit' },
       ].map((option) => {
         const active = unit === option.value;
 
@@ -11,11 +15,13 @@ export default function UnitToggle({ unit, onChange }) {
           <button
             key={option.value}
             type="button"
+            role="radio"
+            aria-checked={active}
             onClick={() => onChange(option.value)}
-            className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+            className={`min-w-[48px] rounded-full px-3 py-1.5 text-sm font-semibold transition ${
               active
                 ? 'bg-white text-slate-950 shadow-lg'
-                : 'text-slate-300 hover:text-white'
+                : 'text-slate-400 hover:text-white'
             }`}
           >
             {option.label}

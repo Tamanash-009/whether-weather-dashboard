@@ -4,17 +4,10 @@ import WeatherIcon from './WeatherIcon';
 
 export default function HourlyForecast({ hourly }) {
   return (
-    <GlassCard className="rounded-[34px] p-6" delay={0.18}>
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <h2 className="section-heading">24-Hour Forecast</h2>
-          <p className="section-subtitle">
-            Designed as a smooth horizontal weather ribbon.
-          </p>
-        </div>
-      </div>
+    <GlassCard className="rounded-[34px] p-5 sm:p-6" delay={0.16}>
+      <h2 className="section-heading">Hourly Forecast</h2>
 
-      <div className="weather-scroll mt-6 overflow-x-auto pb-2">
+      <div className="weather-scroll mt-5 overflow-x-auto pb-2">
         <div className="flex min-w-max gap-3">
           {hourly.map((entry, index) => (
             <motion.div
